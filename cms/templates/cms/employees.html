@@ -1,0 +1,31 @@
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div style="padding: 20px;">
+<div class="add-employee" style="margin-bottom: 30px;">
+  <a class="btn btn-primary">Add an employee</a>
+</div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Position</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees_list %}
+      <tr>
+        <td>{{employee.usernane.first_name}}</td>
+        <td>{{employee.usernane.last_name}}</td>
+        <td>{{employee.position}}</td>
+        <td><a href="mailto:{{employee.usernane.email}}">{{employee.usernane.email}}</a></td>
+        <td><a href="tel:{{employee.phone}}">{{employee.phone}}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+  {% endblock %}
