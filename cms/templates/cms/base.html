@@ -103,7 +103,7 @@
 
 
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Clients-->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -119,6 +119,23 @@
                         <a class="collapse-item" href="{% url 'clients-sociale-media' %}">Social Media</a>
                         <a class="collapse-item" href="{% url 'clients-content' %}">Content</a>
                         <a class="collapse-item" href="{% url 'clients' %}">Others</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Employees-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-users"></i>
+                    <span>Employees</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a href="{% url 'employees' %}">
+                            <h6 class="collapse-header">All Employees</h6>
+                        </a>
+                        <a class="collapse-item" href="{% url 'add-employee' %}">Add Employee</a>
                     </div>
                 </div>
             </li>
