@@ -19,7 +19,7 @@ class Employee(models.Model):
         (CONTENT_MANAGER, 'CONTENT MANAGER'),
         (SOCIAL_MANAGER, 'SOCIAL_MANAGER')
     ]
-    usernane = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=12, null=False)
     birthday = models.DateTimeField(auto_now_add=False)
     gender = models.CharField(max_length=40, choices=GENDER_CHOICES, default=MALE)
@@ -33,7 +33,7 @@ class Employee(models.Model):
 
 
     def __str__(self):
-        return self.usermane.first_name
+        return self.username.first_name
 
 
 class Client(models.Model):

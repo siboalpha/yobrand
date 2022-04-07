@@ -18,10 +18,10 @@
     <tbody>
       {% for employee in employees_list %}
       <tr>
-        <td>{{employee.usernane.first_name}}</td>
-        <td>{{employee.usernane.last_name}}</td>
+        <td>{{employee.username.first_name}}</td>
+        <td>{{employee.username.last_name}}</td>
         <td>{{employee.position}}</td>
-        <td><a href="mailto:{{employee.usernane.email}}">{{employee.usernane.email}}</a></td>
+        <td><a href="mailto:{{employee.username.email}}">{{employee.username.email}}</a></td>
         <td><a href="tel:{{employee.phone}}">{{employee.phone}}</a></td>
       </tr>
       {% endfor %}

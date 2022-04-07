@@ -42,7 +42,7 @@ class AddTaskForm(ModelForm):
 class EmployeeForm(ModelForm):
     class Meta:
         model = Employee
-        fields = ['usernane','phone','birthday', 'gender', 
+        fields = ['username','phone','birthday', 'gender', 
                 'position', 'address', 'address2', 'country',
                 'state_city', 'eduction']
         widgets = {
