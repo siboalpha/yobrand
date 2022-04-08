@@ -245,4 +245,9 @@ def emplyeeSettings(request, pk):
 def userRequest(request):
     context = {}
     return render(request, 'cms/user-request.html')
+
+
+def submitRequest(request):
+    context = {}
+    return render(request, 'cms/submit-request.html')
     
