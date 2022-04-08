@@ -1,1 +1,21 @@
-<h1>Submit request</h1>
+{% extends 'cms/base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-xl-7 col-lg-6">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+            {{form.title}}
+        </div>
+       <div class="form-group">
+            {{form.request_to}}
+        
+        <div class="form-group">
+            {{form.description}}
+        </div>
+        
+        <button type="submit" value="Submit" class="btn btn-primary">Add</button>
+     </form>
+</div>
+
+{% endblock %}

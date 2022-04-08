@@ -1,3 +1,4 @@
+from ast import Return
 from multiprocessing import context
 from tokenize import group
 from unicodedata import name
@@ -249,10 +250,11 @@ def userRequest(request):
 
 def submitRequest(request):
     form = SubmitRequestForm()
+    context = {'form': form}
     if request.method == 'POST':
         form = SubmitRequestForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
-    context = {}
+            return redirect('dashboard')
     return render(request, 'cms/submit-request.html', context)
     
