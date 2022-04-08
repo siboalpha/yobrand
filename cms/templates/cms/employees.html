@@ -1,31 +1,49 @@
 {% extends 'cms/base.html' %}
 {% load static %}
 {% block content %}
-<div style="padding: 20px;">
-<div class="add-employee" style="margin-bottom: 30px;">
-  <a href="{% url 'add-employee' %}" class="btn btn-primary">Add an employee</a>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <div class="add-employee" style="margin-bottom: 30px;">
+        <a href="{% url 'add-employee' %}" class="btn btn-primary">Add an employee</a>
+      </div>
+        <h6 class="m-0 font-weight-bold text-primary">Yobrand employees</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                      <th scope="col">First name</th>
+                      <th scope="col">Last name</th>
+                      <th scope="col">Position</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                      <th scope="col">First name</th>
+                      <th scope="col">Last name</th>
+                      <th scope="col">Position</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+
+                    </tr>
+                </tfoot>
+                <tbody>
+                  {% for employee in employees_list %}
+                  <tr>
+                    <td>{{employee.username.first_name}}</td>
+                    <td>{{employee.username.last_name}}</td>
+                    <td>{{employee.position}}</td>
+                    <td><a href="mailto:{{employee.username.email}}">{{employee.username.email}}</a></td>
+                    <td><a href="tel:{{employee.phone}}">{{employee.phone}}</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Position</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for employee in employees_list %}
-      <tr>
-        <td>{{employee.username.first_name}}</td>
-        <td>{{employee.username.last_name}}</td>
-        <td>{{employee.position}}</td>
-        <td><a href="mailto:{{employee.username.email}}">{{employee.username.email}}</a></td>
-        <td><a href="tel:{{employee.phone}}">{{employee.phone}}</a></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
 </div>
   {% endblock %}
