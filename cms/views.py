@@ -248,6 +248,11 @@ def userRequest(request):
 
 
 def submitRequest(request):
+    form = SubmitRequestForm()
+    if request.method == 'POST':
+        form = SubmitRequestForm(request.POST)
+        if form.is_valid:
+            form.save()
     context = {}
-    return render(request, 'cms/submit-request.html')
+    return render(request, 'cms/submit-request.html', context)
     

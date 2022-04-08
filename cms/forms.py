@@ -2,10 +2,10 @@ from array import array
 from dataclasses import field
 from statistics import mode
 from django import forms
-from django.forms import ModelForm, TextInput, EmailInput, PasswordInput, Select, Textarea, SelectDateWidget
+from django.forms import ModelForm, TextInput, Select, Textarea, SelectDateWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Activity, Employee, Task
+from .models import Activity, Employee, Task, Request
 
 class CreateEmployeeForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -65,6 +65,18 @@ class AddActivityForm(ModelForm):
         widgets = {
         'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Activity title'}),
         'due_date': DatePickerInput(attrs={'class': 'form-control'}),
+        'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Activity description'}),
+
+    }
+
+
+class SubmitRequestForm(ModelForm):
+    class Meta:
+        model = Request
+        fields = ['title', 'description', 'request_to']
+        widgets = {
+        'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Activity title'}),
+        'request_to': Select(attrs={'class': 'form-control'}),
         'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Activity description'}),
 
     }
