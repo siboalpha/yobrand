@@ -240,3 +240,9 @@ def emplyeeSettings(request, pk):
             form.save()
             return redirect('dashboard')
     return render(request, 'cms/employee-settings.html', context)
+
+
+def userRequest(request):
+    context = {}
+    return render(request, 'cms/user-request.html')
+    
