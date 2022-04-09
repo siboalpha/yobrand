@@ -18,9 +18,14 @@
             <!--y -->
             <div class="card-body">
                 <!-- Task trigger modal -->
-                <a href="#">
-                    <p><span><i class="far fa-dot-circle" style='color:red'></i><span> </span>Title</p>
-                </a>
+                {% for task in tasks %}
+                    {% if task.complete == False %}
+                    <a href="{% url 'task' task.id %}">
+                        <p><span><i class="far fa-dot-circle" style='color:red'></i><span> </span>{{task.title}}</p>
+                    </a>
+
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
