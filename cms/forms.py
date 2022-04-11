@@ -1,11 +1,12 @@
 from array import array
 from dataclasses import field
 from statistics import mode
+from tkinter import Widget
 from django import forms
 from django.forms import ModelForm, TextInput, Select, Textarea, SelectDateWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Activity, Employee, Task, Request
+from .models import *
 
 class CreateEmployeeForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
@@ -69,14 +70,13 @@ class AddActivityForm(ModelForm):
 
     }
 
-
-class SubmitRequestForm(ModelForm):
+class SubmitRequest(ModelForm):
     class Meta:
-        model = Request
-        fields = ['title', 'description', 'request_to']
+        model = EmployeeRequest
+        fields = ['title','to_user', 'description']
         widgets = {
-        'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Activity title'}),
-        'request_to': Select(attrs={'class': 'form-control'}),
-        'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Activity description'}),
-
-    }
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Request title'}),
+            'to_user': Select(attrs={'class': 'form-control', 'placeholder': 'Request title'}),
+            'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Request details'}),
+        }
+    

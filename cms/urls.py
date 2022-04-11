@@ -35,10 +35,5 @@ urlpatterns = [
     path('complete-activity/<pk>/', views.completeActivity, name="complete-activity"),
     path('delete-activity/<pk>/', views.deleteActivity, name="delete-activity"),
 
-    
-    path('user-request/', views.userRequest, name="user-request"),
-    path('submit-request/', views.submitRequest, name="submit-request"),
-
-
-
+    path('submit-request/', views.submitRequest, name='submit-request'),
 ]

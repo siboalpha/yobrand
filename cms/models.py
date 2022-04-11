@@ -1,5 +1,7 @@
+from distutils.archive_util import make_archive
 from operator import mod
-from turtle import position
+from tkinter import CASCADE
+from turtle import position, title
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -93,6 +95,7 @@ class Task(models.Model):
 
 
 class Activity(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=40, null=True)
     description = models.TextField(max_length=200, null=True)
     due_date = models.DateField(auto_now_add=False, null=True)
@@ -100,11 +103,13 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
-        
-class Request(models.Model):
-    title = models.CharField(max_length=100, null=True)
-    request_to = models.ForeignKey(User, on_delete=models.CASCADE)
-    description = models.TextField(max_length=1000, null=True)
+
+class EmployeeRequest(models.Model):
+    title = models.CharField(max_length= 40)
+    from_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    to_user = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(max_length=300)
+    requested_at = models.DateField(auto_now_add=True, null = True)
 
     def __str__(self):
         return self.title

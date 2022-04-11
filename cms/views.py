@@ -1,7 +1,10 @@
 from ast import Return
+from genericpath import exists
 from multiprocessing import context
 from tokenize import group
 from unicodedata import name
+from urllib import response
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
@@ -50,10 +53,15 @@ def dashboard(request):
     tasks = Task.objects.all().order_by('due_date', 'due_time')
     task_count = Task.objects.all().count()
     uncompleted_task_task_count = Task.objects.filter(complete = False).count()
-    value = (uncompleted_task_task_count * 100)/task_count
-    formatted_value = "{:.2f}".format(value)
-    x=float(formatted_value)
-    y = 100-x
+    if task_count == 0:
+        value = (uncompleted_task_task_count * 100)/1
+        x = 0
+        y = 0
+    else:
+        value = (uncompleted_task_task_count * 100)/task_count
+        formatted_value = "{:.2f}".format(value)
+        x=float(formatted_value)
+        y = 100-x
     
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
@@ -198,9 +206,13 @@ def addActivity(request):
     context = {'form':form}
     if request.method == 'POST':
         form = AddActivityForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
+            user_request = form.save(commit=False)
+            user_request.author = request.user
             form.save()
             return redirect('activities')
+        else:
+            form = AddActivityForm()
     return render(request, 'cms/add-activity.html', context)
 
 
@@ -243,18 +255,18 @@ def emplyeeSettings(request, pk):
     return render(request, 'cms/employee-settings.html', context)
 
 
-def userRequest(request):
-    context = {}
-    return render(request, 'cms/user-request.html')
-
-
 def submitRequest(request):
-    form = SubmitRequestForm()
-    context = {'form': form}
+    form = SubmitRequest()
     if request.method == 'POST':
-        form = SubmitRequestForm(request.POST)
+        form = SubmitRequest(request.POST)
         if form.is_valid():
+            submited_request = form.save(commit=False)
+            submited_request.from_user = request.user
             form.save()
             return redirect('dashboard')
-    return render(request, 'cms/submit-request.html', context)
+        else:
+            form = SubmitRequest()
+    context = {'form':form}
+    return render(request, 'cms/submi-request.html', context)
+
     
