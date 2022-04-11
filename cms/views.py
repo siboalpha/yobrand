@@ -65,7 +65,9 @@ def dashboard(request):
     
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    context = {'tasks': tasks, 'task_count': task_count, 'x': x, 'y': y, 'tasks_notification':tasks_notification}
+    requests = EmployeeRequest.objects.all()
+    requests_notification = EmployeeRequest.objects.all().count
+    context = {'tasks': tasks, 'task_count': task_count, 'x': x, 'y': y,'requests': requests, 'tasks_notification':tasks_notification, 'requests_notification': requests_notification}
     print(task_count)
     return render(request, 'cms/dashboard.html', context)
 
