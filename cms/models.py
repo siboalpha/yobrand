@@ -39,6 +39,8 @@ class Employee(models.Model):
 
 class Client(models.Model):
     name = models.CharField(max_length=40, null=True)
+    email = models.EmailField(max_length=40, null=True)
+    phone = models.CharField(max_length=30, null=True)
     website = models.URLField(max_length=100, null=True, blank=True)
     instagram = models.URLField(max_length=100, null=True, blank=True)
     facebook = models.URLField(max_length=100, null=True, blank=True)
