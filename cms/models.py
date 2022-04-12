@@ -113,3 +113,6 @@ class EmployeeRequest(models.Model):
 
     def __str__(self):
         return self.title
+
+    def shortrequest(self):
+        return self.description[0:50]+"..."
