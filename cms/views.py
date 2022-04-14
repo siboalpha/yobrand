@@ -65,7 +65,7 @@ def dashboard(request):
     
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    requests = EmployeeRequest.objects.filter(employee=request.user)
+    requests = EmployeeRequest.objects.filter(to_user=request.user)
     requests_notification = requests.count()
     context = {'tasks': tasks, 'task_count': task_count, 'x': x, 'y': y,'requests': requests, 'tasks_notification':tasks_notification, 'requests_notification': requests_notification}
     print(task_count)
@@ -270,7 +270,7 @@ def userRequest(request, pk):
 def userRequests(request):
     requests = EmployeeRequest.objects.filter(to_user=request.user)
     requests_notification = requests.count
-    tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
+    tasks_notification = Task.objects.filter(to_user=request.user, complete = False).count()
     context = {'tasks': tasks, 'tasks_notification': tasks_notification, 'requests': requests, 'requests_notification': requests_notification}
     return render(request, 'cms/user-requests.html', context)
 
