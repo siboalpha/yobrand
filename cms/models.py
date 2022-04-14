@@ -106,8 +106,8 @@ class Activity(models.Model):
 
 class EmployeeRequest(models.Model):
     title = models.CharField(max_length= 40)
-    from_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    to_user = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    from_user = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=300)
     requested_at = models.DateField(auto_now_add=True, null = True)
 
