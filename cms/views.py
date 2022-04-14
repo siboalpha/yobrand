@@ -65,8 +65,12 @@ def dashboard(request):
     
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    requests = EmployeeRequest.objects.all()
-    requests_notification = EmployeeRequest.objects.all().count
+    if request.user.groups == 'employees':
+        requests = EmployeeRequest.objects.filter(to_user=request.user.username)
+        requests_notification = EmployeeRequest.objects.filter(to_user=request.user).count
+    else:
+        requests = {}
+        requests_notification = 0
     context = {'tasks': tasks, 'task_count': task_count, 'x': x, 'y': y,'requests': requests, 'tasks_notification':tasks_notification, 'requests_notification': requests_notification}
     print(task_count)
     return render(request, 'cms/dashboard.html', context)
@@ -256,6 +260,10 @@ def emplyeeSettings(request, pk):
             return redirect('dashboard')
     return render(request, 'cms/employee-settings.html', context)
 
+
+def userRequests(request):
+    context = {}
+    return render(request, 'cms/user-requests.html', context)
 
 def submitRequest(request):
     form = SubmitRequest()

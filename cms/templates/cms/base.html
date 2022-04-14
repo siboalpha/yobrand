@@ -139,6 +139,24 @@
                     </div>
                 </div>
             </li>
+            <!-- Nav Item - Employees-->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuItemRequests"
+                    aria-expanded="true" aria-controls="menuItemRequests">
+                    <i class="fas fa-comments"></i>
+                    <span>Requests</span>
+                </a>
+                <div id="menuItemRequests" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a href="{% url 'user-requests' %}">
+                            <h6 class="collapse-header">All requests</h6>
+                        </a>
+                        <a class="collapse-item" href="{% url 'submit-request' %}">Submit a requests</a>
+                        <a class="collapse-item" href="{% url 'add-employee' %}">Processed requests</a>
+                        <a class="collapse-item" href="{% url 'add-employee' %}">Unprocessed requsts</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

@@ -36,4 +36,5 @@ urlpatterns = [
     path('delete-activity/<pk>/', views.deleteActivity, name="delete-activity"),
 
     path('submit-request/', views.submitRequest, name='submit-request'),
+    path('user-requests', views.userRequests, name="user-requests")
 ]
