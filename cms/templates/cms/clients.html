@@ -30,7 +30,7 @@
                     <tbody>
                         {% for client in client_list %}
                         <tr>
-                            <td>{{client.name}}</td>
+                            <td><a href="{% url 'client-profile' client.id %}"> {{client.name}}</a></td>
                             <td>{{client.email}}</td>
                             <td>{{client.phone}}</td>
                             <td>{{client.website}}</td>

@@ -36,7 +36,7 @@
                   <tbody>
                     {% for employee in employees_list %}
                     <tr>
-                      <td>{{employee.username.first_name}}</td>
+                      <td><a href="{% url 'employee-profile' %}">{{employee.username.first_name}}</a></td>
                       <td>{{employee.username.last_name}}</td>
                       <td>{{employee.position}}</td>
                       <td><a href="mailto:{{employee.username.email}}">{{employee.username.email}}</a></td>

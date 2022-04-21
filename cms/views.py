@@ -1,5 +1,6 @@
 from ast import Return
 from genericpath import exists
+from http import client
 from multiprocessing import context
 from tokenize import group
 from unicodedata import name
@@ -179,6 +180,15 @@ def addClient(request):
     return render(request, 'cms/add-client.html', context)
 
 
+def clientProfile(request, pk):
+    client_details = Client.objects.get(id=pk)
+    client_name = client_details.id
+    projects = Project.objects.filter(client=client_details.id)
+    print(projects)
+   
+    context = {'client_details': client_details,'projects':projects}
+    return render(request, 'cms/client-profile.html', context)
+
 @login_required(login_url='login')
 def activities(request):
     activities = Activity.objects.all()
@@ -223,6 +233,7 @@ def employees(request):
 
 def addEmployee(request):
     employee_list = Employee.objects.all()
+    print(employee_list)
     form = EmployeeForm()
     context = {'form': form, 'employee_list':employee_list}
     if request.method == 'POST':
@@ -242,6 +253,14 @@ def emplyeeSettings(request, pk):
             form.save()
             return redirect('dashboard')
     return render(request, 'cms/employee-settings.html', context)
+
+
+
+def employeeProfile(request):
+    context = {}
+    return render(request, 'cms/employee-profile.html', context)
+
+
 
 def userRequest(request, pk):
     user_request = EmployeeRequest.objects.get(id=pk)
