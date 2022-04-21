@@ -53,26 +53,27 @@ class Client(models.Model):
         return self.name
 
 class Project(models.Model):
-    COMPLETE = 'COMPLETE'
-    PENDING = 'PENDING'
-    UNCOMPLETE = 'UNCOMPLETE'
+    Complete = 'Complete'
+    Pending = 'Pending'
+    Uncomplete = 'UNCOMPLETE'
     PROJECT_STATUS_CHOICES = [
-        (COMPLETE, 'COMPLETE'),
-        (PENDING, 'PENDING'),
-        (UNCOMPLETE, 'UNCOMPLETE')
+        (Complete, 'Complete'),
+        (Pending, 'Pending'),
+        (Uncomplete, 'Uncomplete')
     ]
 
-    WEBDESIGN = 'WEBDESIGN'
-    CONTENT = 'CONTENT'
-    SOCIAL = 'SOCIAL'
-    PROJECT_STATUS_CHOICES = [
-        (WEBDESIGN, 'COMPLETE'),
-        (CONTENT, 'PENDING'),
-        (SOCIAL, 'UNCOMPLETE')
+    Web_design = 'Web design'
+    Content = 'Content'
+    Social_media_marketing = 'Social media marketing'
+    PROJECT_TYPE_CHOICES = [
+        (Web_design, 'Web design'),
+        (Content, 'Content'),
+        (Social_media_marketing, 'Social media marketing')
     ]
     name = name = models.CharField(max_length=40, null=True)
     description = models.TextField(max_length=200, null=True)
-    status = models.CharField(max_length=40, choices=PROJECT_STATUS_CHOICES, default=WEBDESIGN)
+    project_type = models.CharField(max_length=40, choices=PROJECT_TYPE_CHOICES, default=Web_design)
+    status = models.CharField(max_length=40, choices=PROJECT_STATUS_CHOICES, default=Uncomplete)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
