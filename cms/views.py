@@ -90,7 +90,7 @@ def tasksCompleted(request):
     tasks_count = tasks.filter(complete = False ).count()
 
     #Notification count
-    tasks_notification = Task.objects.filter(to_user=request.user, complete = False).count()
+    tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
     requests = EmployeeRequest.objects.all()
     requests_notification = requests.count
     context = {'tasks': tasks, 'tasks_notification': tasks_notification, 'requests':requests, 'requests_notification': requests_notification}
@@ -163,38 +163,20 @@ def clients(request):
     client_list = Client.objects.all()
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    context = {'client_list':client_list, 'tasks_notification' :tasks_notification}
+    context = {'client_list':client_list, 'tasks_notification': tasks_notification}
     return render(request, 'cms/clients.html', context)
 
-
 @login_required(login_url='login')
-def clientsWebsite(request):
-
-    #Notification count
+def addClient(request):
+    form = addClientForm()
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    context = {'tasks_notification':tasks_notification}
-    return render(request, 'cms/clients-website.html', context)
-
-
-@login_required(login_url='login')
-def clientsSocialMedia(request):
-
-    #Notification count
-    tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    context = {'tasks_notification': tasks_notification}
-    return render(request, 'cms/clients-sociale-media.html', context)
-
-
-@login_required(login_url='login')
-def clientsContent(request):
-
-    #Notification count
-    tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    context = {'tasks_notification': tasks_notification}
-    return render(request, 'cms/clients-content.html', context)
-
-
-
+    context = {'form':form, 'tasks_notification': tasks_notification}
+    if request.method == 'POST':
+        form = addClientForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('clients')
+    return render(request, 'cms/add-client.html', context)
 
 
 @login_required(login_url='login')
@@ -240,8 +222,9 @@ def employees(request):
     return render(request, 'cms/employees.html', context)
 
 def addEmployee(request):
+    employee_list = Employee.objects.all()
     form = EmployeeForm()
-    context = {'form': form}
+    context = {'form': form, 'employee_list':employee_list}
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
         if form.is_valid():

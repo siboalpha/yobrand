@@ -3,7 +3,7 @@ from dataclasses import field
 from statistics import mode
 from tkinter import Widget
 from django import forms
-from django.forms import ModelForm, TextInput, Select, Textarea, SelectDateWidget
+from django.forms import ModelForm, TextInput, Select, Textarea, SelectDateWidget, URLInput
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
@@ -80,3 +80,19 @@ class SubmitRequest(ModelForm):
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Request details'}),
         }
     
+
+class addClientForm(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['name', 'email', 'phone', 'website', 'instagram', 'facebook', 'twitter', 'linkedin']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Clients name'}),
+            'email': TextInput(attrs={'class': 'form-control', 'placeholder': 'Clients email'}),
+            'phone': TextInput(attrs={'class': 'form-control', 'placeholder': 'Clients phone'}),
+            'website': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients website'}),
+            'instagram': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients instagram'}),
+            'facebook': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients facebook'}),
+            'twitter': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients twitter'}),
+            'linkedin': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients linkedin'}),
+
+        }

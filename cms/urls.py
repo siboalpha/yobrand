@@ -25,10 +25,7 @@ urlpatterns = [
 
 
     path('clients/', views.clients, name="clients"),
-    path('clients/', views.clients, name="clients"),
-    path('clients-website/', views.clientsWebsite, name="clients-website"),
-    path('clients-sociale-media/', views.clientsSocialMedia, name="clients-sociale-media"),
-    path('clients-content/', views.clientsContent, name="clients-content"),
+    path('add-client', views.addClient, name='add-client'),
 
     path('activities/', views.activities, name="activities"),
     path('add-activity/', views.addActivity, name="add-activity"),
