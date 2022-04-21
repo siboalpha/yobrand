@@ -118,6 +118,10 @@ def addTask(request):
         form = AddTaskForm(request.POST)
         if form.is_valid():
             form.save()
+            assigne_user = form.cleaned_data['employee']
+            assigne_user_user = assigne_user.username
+            assigne_user_email = User.objects.get(username=assigne_user_user).email
+            print(assigne_user_email)
             return redirect('tasks')
     return render(request, 'cms/add-task.html', context)
 
@@ -191,6 +195,11 @@ def editClient(request, pk):
             return redirect('clients')
     return render(request, 'cms/edit-client.html', context)
 
+@login_required(login_url='login')
+def deleteClient(request,pk):
+    client = Client.objects.get(id=pk)
+    client.delete()
+    return redirect('clients')
 
 def clientProfile(request, pk):
     client_details = Client.objects.get(id=pk)
@@ -255,16 +264,16 @@ def addEmployee(request):
             return redirect('employees')
     return render(request, 'cms/add-employee.html', context)
 
-def emplyeeSettings(request, pk):
-    employee = request.user
-    form = EmployeeForm(id=pk, instance=employee)
+def userSettings(request, pk):
+    user = Employee.objects.get(id=pk)
+    form = CreateEmployeeForm(instance=user)
     context = {'form': form}
     if request.method == 'POST':
-        form = EmployeeForm(request.POST, instance = request.user)
+        form = CreateEmployeeForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('dashboard')
-    return render(request, 'cms/employee-settings.html', context)
+    return render(request, 'cms/user-settings.html', context)
 
 
 

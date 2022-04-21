@@ -21,6 +21,7 @@ class CreateEmployeeForm(UserCreationForm):
         model = User
         fields = ['username','first_name','last_name','email', 'password1', 'password2']
 
+
 class DatePickerInput(forms.DateInput):
         input_type = 'date'
 class TimePickerInput(forms.TimeInput):

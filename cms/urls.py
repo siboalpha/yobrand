@@ -18,14 +18,15 @@ urlpatterns = [
     path('complete-task/<pk>/', views.completeTask, name="complete-task"),
     path('delete-task/<pk>', views.deleteTask, name="delete-task"),
 
-    path('employee-settings/', views.emplyeeSettings, name="employee-settings"),
+    path('user-settings/<pk>', views.userSettings, name="user-settings"),
     path('employees/', views.employees, name="employees"),
     path('add-employee/', views.addEmployee, name="add-employee"),
     path('employee-profile/', views.employeeProfile, name='employee-profile'),
 
     path('clients/', views.clients, name="clients"),
     path('add-client/', views.addClient, name='add-client'),
-    path('edit-client/<pk>', views.editClient, name="edit-client"),
+    path('edit-client/<pk>/', views.editClient, name="edit-client"),
+    path('delete-client/<pk>', views.deleteClient, name='delete-client'),
     path('client-profile/<pk>/', views.clientProfile, name="client-profile"),
 
     path('activities/', views.activities, name="activities"),
