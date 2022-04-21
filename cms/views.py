@@ -179,6 +179,18 @@ def addClient(request):
             return redirect('clients')
     return render(request, 'cms/add-client.html', context)
 
+@login_required(login_url='login')
+def editClient(request, pk):
+    client = Client.objects.get(id=pk)
+    form = addClientForm(instance=client)
+    context = {'form':form}
+    if request.method == 'POST':
+        form = addClientForm(request.POST, instance=client)
+        if form.is_valid():
+            form.save()
+            return redirect('clients')
+    return render(request, 'cms/edit-client.html', context)
+
 
 def clientProfile(request, pk):
     client_details = Client.objects.get(id=pk)

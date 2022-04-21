@@ -25,7 +25,8 @@ urlpatterns = [
 
     path('clients/', views.clients, name="clients"),
     path('add-client/', views.addClient, name='add-client'),
-    path('client-profile/<pk>/', views.clientProfile, name='client-profile'),
+    path('edit-client/<pk>', views.editClient, name="edit-client"),
+    path('client-profile/<pk>/', views.clientProfile, name="client-profile"),
 
     path('activities/', views.activities, name="activities"),
     path('add-activity/', views.addActivity, name="add-activity"),
