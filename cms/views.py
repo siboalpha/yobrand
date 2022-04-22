@@ -1,12 +1,9 @@
-from ast import Return
-from genericpath import exists
-from http import client
-from multiprocessing import context
-from tokenize import group
-from unicodedata import name
-from urllib import response
+from email import message
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.core.mail import send_mail, BadHeaderError
+
+from core import settings
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -118,10 +115,6 @@ def addTask(request):
         form = AddTaskForm(request.POST)
         if form.is_valid():
             form.save()
-            assigne_user = form.cleaned_data['employee']
-            assigne_user_user = assigne_user.username
-            assigne_user_email = User.objects.get(username=assigne_user_user).email
-            print(assigne_user_email)
             return redirect('tasks')
     return render(request, 'cms/add-task.html', context)
 
