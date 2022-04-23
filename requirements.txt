@@ -1,6 +1,4 @@
 asgiref==3.5.0
-Django==4.0.3
-django-braces==1.15.0
-django-model-utils==4.2.0
+Django==4.0.4
+django-environ==0.8.1
 sqlparse==0.4.2
-websockets==8.1
