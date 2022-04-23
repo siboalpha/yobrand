@@ -31,9 +31,6 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
-SECRET_KEY=django-insecure-6bk_!q!h-g0fc2bpk(!kuvfmep3-gh=g1!efj@9rpxm#v)5&*9
-DEBUG=True
-
 ALLOWED_HOSTS = ['siboalpha.pythonanywhere.com','www.siboalpha.pythonanywhere.com','localhost']
 
 
