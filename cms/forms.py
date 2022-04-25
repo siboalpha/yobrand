@@ -1,7 +1,3 @@
-from array import array
-from dataclasses import field
-from statistics import mode
-from tkinter import Widget
 from django import forms
 from django.forms import ModelForm, TextInput, Select, Textarea, SelectDateWidget, URLInput
 from django.contrib.auth.forms import UserCreationForm
