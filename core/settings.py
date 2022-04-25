@@ -31,9 +31,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['siboalpha.pythonanywhere.com','www.siboalpha.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['yobrandcms.herokuapp.com','www.yobrandcms.herokuapp.com','127.0.0.1']
 
 
 # Application definition
