@@ -11,13 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-#import environ
+import environ
 import os
 
 #initialize environment rariables
 
-#env = environ.Env()
-#environ.Env.read_env()
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6bk_!q!h-g0fc2bpk(!kuvfmep3-gh=g1!efj@9rpxm#v)5&*9'
-#env('SECRET_KEY')
+#SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-#env('DEBUG')
-ALLOWED_HOSTS = ['siboalpha.pythonanywhere.com','www.siboalpha.pythonanywhere.com','localhost']
+DEBUG = env('DEBUG')
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+ALLOWED_HOSTS = ['siboalpha.pythonanywhere.com','www.siboalpha.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
