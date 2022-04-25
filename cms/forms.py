@@ -48,7 +48,7 @@ class EmployeeForm(ModelForm):
             'phone': TextInput(attrs={'class': 'form-control', 'placeholder':'Phone Number'}),
             'gender': Select(attrs={'class': 'form-control', 'placeholder':'Gender'}),
             'birthday':DatePickerInput(attrs={'class': 'form-control'}),
-            'position': TextInput(attrs={'class': 'form-control', 'placeholder':'Work position'}),
+            'position': Select(attrs={'class': 'form-control', 'placeholder':'Work position'}),
             'address': TextInput(attrs={'class': 'form-control', 'placeholder':'Primary address'}),
             'address2': TextInput(attrs={'class': 'form-control', 'placeholder':'Secondry address'}),
             'country': TextInput(attrs={'class': 'form-control', 'placeholder':'Your country'}),
