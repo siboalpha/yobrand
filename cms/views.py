@@ -284,9 +284,9 @@ def userRequest(request, pk):
 
 
 def userRequests(request):
-    requests = EmployeeRequest.objects.filter(to_user=request.user)
+    requests = EmployeeRequest.objects.filter(from_user=request.user)
     requests_notification = requests.count
-    tasks_notification = Task.objects.filter(to_user=request.user, complete = False).count()
+    tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
     context = {'tasks': tasks, 'tasks_notification': tasks_notification, 'requests': requests, 'requests_notification': requests_notification}
     return render(request, 'cms/user-requests.html', context)
 
@@ -296,7 +296,7 @@ def submitRequest(request):
         form = SubmitRequest(request.POST)
         if form.is_valid():
             submited_request = form.save(commit=False)
-            submited_request.from_user = Employee.objects.get(username = request.user)
+            submited_request.from_user = request.user
             form.save()
             return redirect('dashboard')
         else:
