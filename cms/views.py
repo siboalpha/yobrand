@@ -29,7 +29,8 @@ def logoutPage(request):
     logout(request)
     return redirect('login')
 
-
+@login_required(login_url='login')
+@managers_only
 def registerPage(request):
     form = CreateEmployeeForm()
     if request.method == "POST":
@@ -62,7 +63,7 @@ def dashboard(request):
     
     #Notification count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    requests = EmployeeRequest.objects.filter(to_user=request.user)
+    requests = EmployeeRequest.objects.filter(to_user=request.user, is_resolved=False)
     requests_notification = requests.count()
     context = {'tasks': tasks, 'task_count': task_count, 'x': x, 'y': y,'requests': requests, 'tasks_notification':tasks_notification, 'requests_notification': requests_notification}
     print(task_count)
@@ -75,7 +76,7 @@ def dashboard(request):
 def tasks(request):
     tasks = Task.objects.filter(employee=request.user).order_by('due_date', 'due_time')
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
-    requests = EmployeeRequest.objects.filter(to_user=request.user)
+    requests = EmployeeRequest.objects.filter(to_user=request.user, is_resolved=False)
     requests_notification = requests.count
     context = {'tasks': tasks, 'tasks_notification': tasks_notification, 'requests': requests, 'requests_notification': requests_notification}
     return render(request, 'cms/tasks.html', context)
@@ -339,4 +340,74 @@ def deleteRequest(request, pk):
     else:
         return HttpResponse("You re not authorised to perfrom that action")
     return redirect ('user-requests')
+
+
+@login_required(login_url='login')
+def projects(request):
+    projects = Project.objects.all()
+    context = {'projects': projects}
+    return render(request, 'cms/projects.html', context)
+
+@login_required(login_url='login')
+def project(request, pk):
+    project = Project.objects.get(id=pk)
+    context = {'project': project}
+    return render(request, 'cms/project.html', context)
+
+
+@login_required(login_url='login')
+@managers_only
+def addProject(request):
+    form = addProjectForm()
+    context = {'form': form}
+    if request.method == 'POST':
+        form = addProjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('projects')
+    return render(request, 'cms/add-project.html', context)
+
+
+@login_required(login_url='login')
+@managers_only
+def deleteProject(request, pk):
+    project = Project.objects.get(id=pk)
+    project.delete()
+    return redirect('projects')
+
+
+@login_required(login_url='login')
+@managers_only
+def completeProject(request, pk):
+    project = Project.objects.get(id=pk)
+    project.status = 'Complete'
+    project.save()
+    return redirect('projects')
+
+
+@login_required(login_url='login')
+@managers_only
+def uncompleteProject(request, pk):
+    project = Project.objects.get(id=pk)
+    project.status = 'Uncomplete'
+    project.save()
+    return redirect('projects')
+
+
+@login_required(login_url='login')
+@managers_only
+def editProject(request, pk):
+    project = Project.objects.get(id=pk)
+    form = addProjectForm(instance=project)
+    context = {'form': form}
+    if request.method == 'POST':
+        form = addProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect('projects')
+    return render(request, 'cms/edit-project.html', context)
+
+
+
+
     

@@ -48,6 +48,25 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
+            <!-- Nav Item - Admin panel -->
+            {% if request.user.is_staff %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuItemAdminPanel"
+                    aria-expanded="true" aria-controls="menuItemAdminPanel">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Admin</span>
+                </a>
+                <div id="menuItemAdminPanel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a href="#">
+                            <h6 class="collapse-header">Admin Panel</h6>
+                        </a>
+                        <a class="collapse-item" href="{% url 'register' %}">Register Accounts</a>
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -119,10 +138,10 @@
                 <div id="menuItemProjects" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a href="{% url 'clients' %}">
+                        <a href="{% url 'projects' %}">
                             <h6 class="collapse-header">All Projects</h6>
                         </a>
-                        <a class="collapse-item" href="{% url 'add-client' %}">Add a project</a>
+                        <a class="collapse-item" href="{% url 'add-project' %}">Add a project</a>
                     </div>
                 </div>
             </li>

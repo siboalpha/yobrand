@@ -52,7 +52,7 @@ class Client(models.Model):
 class Project(models.Model):
     Complete = 'Complete'
     Pending = 'Pending'
-    Uncomplete = 'UNCOMPLETE'
+    Uncomplete = 'Uncomplete'
     PROJECT_STATUS_CHOICES = [
         (Complete, 'Complete'),
         (Pending, 'Pending'),
@@ -67,14 +67,18 @@ class Project(models.Model):
         (Content, 'Content'),
         (Social_media_marketing, 'Social media marketing')
     ]
-    name = name = models.CharField(max_length=40, null=True)
+    name = models.CharField(max_length=40, null=True)
     description = models.TextField(max_length=200, null=True)
     project_type = models.CharField(max_length=40, choices=PROJECT_TYPE_CHOICES, default=Web_design)
     status = models.CharField(max_length=40, choices=PROJECT_STATUS_CHOICES, default=Uncomplete)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
+    date_added = models.DateTimeField(default=timezone.now())
     
     def __str__(self):
         return self.name
+    
+    def shortproject(self):
+        return self.description[0:100]+"..."
 
 
 

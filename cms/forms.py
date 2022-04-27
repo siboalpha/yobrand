@@ -94,3 +94,16 @@ class addClientForm(ModelForm):
             'linkedin': URLInput(attrs={'class': 'form-control', 'placeholder': 'Clients linkedin'}),
 
         }
+
+
+class addProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'description', 'project_type', 'status', 'client']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Project name'}),
+            'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Project details'}),
+            'project_type': Select(attrs={'class': 'form-control'}),
+            'status': Select(attrs={'class': 'form-control'}),
+            'client': Select(attrs={'class': 'form-control'}),
+        }

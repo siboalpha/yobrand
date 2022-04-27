@@ -1,10 +1,8 @@
-from unicodedata import name
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
     path('', views.dashboard, name="dashboard"),
-
 
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutPage, name="logout"),
@@ -40,4 +38,12 @@ urlpatterns = [
     path('resolve-request/<pk>/', views.resolveRequest, name='resolve-request'),
     path('delete-request/<pk>/', views.deleteRequest, name='delete-request'),
     path('user-requests/', views.userRequests, name="user-requests"),
+
+    path('projects/',views.projects, name='projects'),
+    path('project/<pk>/',views.project, name='project'),
+    path('add-project/', views.addProject, name='add-project'),
+    path('delete-project/<pk>', views.deleteProject, name='delete-project'),
+    path('edit-project/<pk>', views.editProject, name='edit-project'),
+    path('complete-project/<pk>', views.completeProject, name='complete-project'),
+    path('uncomplete-project/<pk>', views.uncompleteProject, name='uncomplete-project')
 ]
