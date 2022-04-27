@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Employee(models.Model):
@@ -106,7 +107,8 @@ class EmployeeRequest(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='Sentfrom+')
     to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name=' Sentto+')
     description = models.TextField(max_length=300)
-    requested_at = models.DateField(auto_now_add=True, null = True)
+    requested_at = models.DateTimeField(default=timezone.now())
+    is_resolved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

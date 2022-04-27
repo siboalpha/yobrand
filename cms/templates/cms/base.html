@@ -158,8 +158,6 @@
                             <h6 class="collapse-header">All requests</h6>
                         </a>
                         <a class="collapse-item" href="{% url 'submit-request' %}">Submit a request</a>
-                        <a class="collapse-item" href="{% url 'add-employee' %}">Processed requests</a>
-                        <a class="collapse-item" href="{% url 'add-employee' %}">Unprocessed requsts</a>
                     </div>
                 </div>
             </li>
@@ -288,8 +286,8 @@
                                     </div>
                                     <div class="message">
                                         <div class="">{{a_request.shortrequest}}</div>
-                                        <div class="small text-gray-500">{{a_request.from_user.username.first_name}}
-                                            {{a_request.from_user.username.last_name}}</div>
+                                        <div class="small text-gray-500">{{a_request.from_user.first_name}}
+                                            {{a_request.from_user.last_name}}</div>
                                     </div>
                                 </a>
                                 {% endfor %}

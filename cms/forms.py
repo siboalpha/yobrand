@@ -76,6 +76,7 @@ class SubmitRequest(ModelForm):
             'to_user': Select(attrs={'class': 'form-control', 'placeholder': 'Request title'}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Request details'}),
         }
+
     
 
 class addClientForm(ModelForm):

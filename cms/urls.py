@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.urls import path
 from . import views
 
@@ -34,7 +35,9 @@ urlpatterns = [
     path('complete-activity/<pk>/', views.completeActivity, name="complete-activity"),
     path('delete-activity/<pk>/', views.deleteActivity, name="delete-activity"),
 
-    path('user-request/<pk>', views.userRequest, name='user-request'),
+    path('user-request/<pk>/', views.userRequest, name='user-request'),
     path('submit-request/', views.submitRequest, name='submit-request'),
-    path('user-requests/', views.userRequests, name="user-requests")
+    path('resolve-request/<pk>/', views.resolveRequest, name='resolve-request'),
+    path('delete-request/<pk>/', views.deleteRequest, name='delete-request'),
+    path('user-requests/', views.userRequests, name="user-requests"),
 ]

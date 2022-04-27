@@ -2,7 +2,6 @@ from email import message
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.core.mail import send_mail, BadHeaderError
-
 from core import settings
 from .models import *
 from .forms import *
@@ -118,6 +117,7 @@ def addTask(request):
             return redirect('tasks')
     return render(request, 'cms/add-task.html', context)
 
+@login_required(login_url='login')
 def editTask(request, pk):
     task = Task.objects.get(id=pk)
     form = AddTaskForm(instance=task)
@@ -129,6 +129,7 @@ def editTask(request, pk):
     context = {'form': form}
     return render(request, 'cms/edit-task.html', context)
 
+@login_required(login_url='login')
 def taskDetail(request, pk):
     task = Task.objects.get(id=pk)
 
@@ -138,7 +139,7 @@ def taskDetail(request, pk):
     return render(request, 'cms/task.html', context)
 
 
-@login_required
+@login_required(login_url='login')
 def completeTask(request,pk):
    task = Task.objects.get(id=pk)
    task.complete = True
@@ -146,14 +147,11 @@ def completeTask(request,pk):
    return redirect('dashboard')
 
 
-@login_required
+@login_required(login_url='login')
 def deleteTask(request,pk):
    task = Task.objects.get(id=pk)
    task.delete()
    return redirect('dashboard')
-
-
-
 
 
 @login_required(login_url='login')
@@ -163,6 +161,7 @@ def clients(request):
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
     context = {'client_list':client_list, 'tasks_notification': tasks_notification}
     return render(request, 'cms/clients.html', context)
+
 
 @login_required(login_url='login')
 def addClient(request):
@@ -176,6 +175,7 @@ def addClient(request):
             return redirect('clients')
     return render(request, 'cms/add-client.html', context)
 
+
 @login_required(login_url='login')
 def editClient(request, pk):
     client = Client.objects.get(id=pk)
@@ -188,12 +188,15 @@ def editClient(request, pk):
             return redirect('clients')
     return render(request, 'cms/edit-client.html', context)
 
+
 @login_required(login_url='login')
 def deleteClient(request,pk):
     client = Client.objects.get(id=pk)
     client.delete()
     return redirect('clients')
 
+
+@login_required(login_url='login')
 def clientProfile(request, pk):
     client_details = Client.objects.get(id=pk)
     client_name = client_details.id
@@ -203,6 +206,7 @@ def clientProfile(request, pk):
     context = {'client_details': client_details,'projects':projects}
     return render(request, 'cms/client-profile.html', context)
 
+
 @login_required(login_url='login')
 def activities(request):
     activities = Activity.objects.all()
@@ -211,6 +215,7 @@ def activities(request):
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
     context = {'activities': activities, 'tasks_notification' :tasks_notification}
     return render(request, 'cms/activities.html', context)
+
 
 @login_required(login_url='login')
 def addActivity(request):
@@ -228,23 +233,28 @@ def addActivity(request):
     return render(request, 'cms/add-activity.html', context)
 
 
+@login_required(login_url='login')
 def completeActivity(request, pk):
     activity = Activity.objects.get(id=pk)
     activity.complete = True
     activity.save()
     return redirect('activities')
 
+@login_required(login_url='login')
 def deleteActivity(request, pk):
     activity = Activity.objects.get(id=pk)
     activity.delete()
     return redirect('activities')
 
 
+@login_required(login_url='login')
 def employees(request):
     employees_list = Employee.objects.all()
     context = {'employees_list': employees_list}
     return render(request, 'cms/employees.html', context)
 
+
+@login_required(login_url='login')
 def addEmployee(request):
     employee_list = Employee.objects.all()
     print(employee_list)
@@ -257,6 +267,8 @@ def addEmployee(request):
             return redirect('employees')
     return render(request, 'cms/add-employee.html', context)
 
+
+@login_required(login_url='login')
 def userSettings(request, pk):
     user = Employee.objects.get(id=pk)
     form = CreateEmployeeForm(instance=user)
@@ -269,27 +281,30 @@ def userSettings(request, pk):
     return render(request, 'cms/user-settings.html', context)
 
 
-
+@login_required(login_url='login')
 def employeeProfile(request):
     context = {}
     return render(request, 'cms/employee-profile.html', context)
 
 
-
+@login_required(login_url='login')
 def userRequest(request, pk):
-    user_request = EmployeeRequest.objects.get(id=pk)
-    context = {'user_request': user_request}
+    userrequest = EmployeeRequest.objects.get(id=pk)
+    context = {'userrequest': userrequest}
     return render(request, 'cms/user-request.html', context)
 
 
-
+@login_required(login_url='login')
 def userRequests(request):
-    requests = EmployeeRequest.objects.filter(from_user=request.user)
-    requests_notification = requests.count
+    requests = EmployeeRequest.objects.filter(to_user=request.user).order_by('-requested_at')
+    unresolved_requests = EmployeeRequest.objects.filter(to_user=request.user, is_resolved=False)
+    requests_notification = unresolved_requests.count
     tasks_notification = Task.objects.filter(employee=request.user, complete = False).count()
     context = {'tasks': tasks, 'tasks_notification': tasks_notification, 'requests': requests, 'requests_notification': requests_notification}
     return render(request, 'cms/user-requests.html', context)
 
+
+@login_required(login_url='login')
 def submitRequest(request):
     form = SubmitRequest()
     if request.method == 'POST':
@@ -297,6 +312,7 @@ def submitRequest(request):
         if form.is_valid():
             submited_request = form.save(commit=False)
             submited_request.from_user = request.user
+            submited_request.is_resolved = False
             form.save()
             return redirect('dashboard')
         else:
@@ -304,4 +320,23 @@ def submitRequest(request):
     context = {'form':form}
     return render(request, 'cms/submi-request.html', context)
 
+
+
+@login_required(login_url='login')
+def resolveRequest(request, pk):
+    userrequest = EmployeeRequest.objects.get(id=pk)
+    userrequest.is_resolved = True
+    userrequest.save()
+    return redirect ('user-requests')
+
+
+@login_required(login_url='login')
+def deleteRequest(request, pk):
+    userrequest = EmployeeRequest.objects.get(id=pk)
+    current_user = request.user
+    if userrequest.from_user == current_user:
+        userrequest.delete()
+    else:
+        return HttpResponse("You re not authorised to perfrom that action")
+    return redirect ('user-requests')
     
