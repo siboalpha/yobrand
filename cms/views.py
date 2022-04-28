@@ -256,6 +256,7 @@ def employees(request):
 
 
 @login_required(login_url='login')
+@managers_only
 def addEmployee(request):
     employee_list = Employee.objects.all()
     print(employee_list)
@@ -267,6 +268,21 @@ def addEmployee(request):
             form.save()
             return redirect('employees')
     return render(request, 'cms/add-employee.html', context)
+
+
+@login_required(login_url='login')
+@managers_only
+def editEmployee(request, pk):
+    employee = Employee.objects.get(id=pk)
+    form = EmployeeForm(instance=employee)
+    context = {'form': form}
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+            return redirect('employees')
+    return render(request, 'cms/edit-employee.html', context)
+    
 
 
 @login_required(login_url='login')
@@ -283,8 +299,9 @@ def userSettings(request, pk):
 
 
 @login_required(login_url='login')
-def employeeProfile(request):
-    context = {}
+def employeeProfile(request, pk):
+    employee = Employee.objects.get(id=pk)
+    context = {'employee': employee}
     return render(request, 'cms/employee-profile.html', context)
 
 

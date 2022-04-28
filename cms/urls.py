@@ -20,7 +20,8 @@ urlpatterns = [
     path('user-settings/<pk>', views.userSettings, name="user-settings"),
     path('employees/', views.employees, name="employees"),
     path('add-employee/', views.addEmployee, name="add-employee"),
-    path('employee-profile/', views.employeeProfile, name='employee-profile'),
+    path('employee-profile/<pk>', views.employeeProfile, name='employee-profile'),
+    path('edit-employee/<pk>', views.editEmployee, name='edit-employee'),
 
     path('clients/', views.clients, name="clients"),
     path('add-client/', views.addClient, name='add-client'),
