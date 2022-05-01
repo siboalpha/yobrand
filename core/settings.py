@@ -34,6 +34,14 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'SECRET_KEY')
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = ['yobrandcms.herokuapp.com','www.yobrandcms.herokuapp.com','127.0.0.1']
 
+# email backend
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD', 'DJANGO_EMAIL_HOST_USER')
+
 
 # Application definition
 

@@ -1,14 +1,17 @@
-from email import message
+import email
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.core.mail import send_mail, BadHeaderError
-from core import settings
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users, managers_only
+from django.core.mail import EmailMessage
+from core import settings
+from django.template.loader import render_to_string
+
 
 
 # Create your views here.
@@ -115,6 +118,21 @@ def addTask(request):
         form = AddTaskForm(request.POST)
         if form.is_valid():
             form.save()
+            employee_assigned = form.cleaned_data['employee']
+            title = form.cleaned_data['title']
+            due_date = form.cleaned_data['due_date']
+            due_time = form.cleaned_data['due_time']
+            context = {'title': title, 'due_date': due_date, 'due_time': due_time}
+            email_template = render_to_string('cms/emails/task.html', context)
+
+            email = EmailMessage(
+                'New task assigned to you',
+                email_template,
+                settings.EMAIL_HOST_USER,
+                [employee_assigned.email]
+            )
+            email.fail_silently = False
+            email.send()
             return redirect('tasks')
     return render(request, 'cms/add-task.html', context)
 
@@ -332,6 +350,21 @@ def submitRequest(request):
             submited_request.from_user = request.user
             submited_request.is_resolved = False
             form.save()
+            form_user = request.user.first_name
+            to_user = form.cleaned_data['to_user']
+            title = form.cleaned_data['title']
+            to_user_name = to_user.first_name
+            context = {'to_user_name': to_user_name, 'form_user': form_user, 'title': title}
+            email_template = render_to_string('cms/emails/request.html', context)
+
+            email = EmailMessage(
+                'New requst is sent to you!',
+                email_template,
+                settings.EMAIL_HOST_USER,
+                [to_user.email],
+            )
+            email.fail_silently = False
+            email.send()
             return redirect('dashboard')
         else:
             form = SubmitRequest()
