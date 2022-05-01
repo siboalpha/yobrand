@@ -132,7 +132,10 @@ def addTask(request):
                 [employee_assigned.email]
             )
             email.fail_silently = False
-            email.send()
+            try:
+                email.send()
+            except:
+                return HttpResponse("Task added but notification has not been sent.")
             return redirect('tasks')
     return render(request, 'cms/add-task.html', context)
 
