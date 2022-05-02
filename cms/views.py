@@ -1,7 +1,5 @@
-import email
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.core.mail import send_mail, BadHeaderError
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
@@ -117,6 +115,8 @@ def addTask(request):
     if request.method == 'POST':
         form = AddTaskForm(request.POST)
         if form.is_valid():
+            submited_task = form.save(commit=False)
+            submited_task.author = request.user
             form.save()
             employee_assigned = form.cleaned_data['employee']
             title = form.cleaned_data['title']
@@ -166,6 +166,20 @@ def completeTask(request,pk):
    task = Task.objects.get(id=pk)
    task.complete = True
    task.save()
+   title = task.title
+   employee = task.employee.email
+   author = task.author.email
+   print(author)
+   context = {'title': title, 'employee': employee}
+   email_template = render_to_string('cms/emails/task_complete.html', context)
+   email = EmailMessage(
+       'Task completed',
+       email_template,
+       settings.EMAIL_HOST_USER,
+       [author]
+   )
+   email.fail_silently = False
+   email.send()
    return redirect('dashboard')
 
 

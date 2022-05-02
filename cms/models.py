@@ -85,7 +85,8 @@ class Project(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=40, null=True)
     description = models.TextField(max_length=200, null=True)
-    employee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    employee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='employee+')
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='autho+')
     project = models.ForeignKey(Project, on_delete=models.SET_NULL ,null=True)
     complete = models.BooleanField(default=False)
     due_date = models.DateField(auto_now_add=False, null=True)
