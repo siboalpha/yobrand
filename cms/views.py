@@ -46,8 +46,8 @@ def registerPage(request):
 
 
 
-#@login_required(login_url='login')
-#@managers_only
+@login_required(login_url='login')
+@managers_only
 def dashboard(request):
     tasks = Task.objects.all().order_by('due_date', 'due_time')
     task_count = Task.objects.all().count()
