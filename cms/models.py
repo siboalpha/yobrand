@@ -72,7 +72,7 @@ class Project(models.Model):
     project_type = models.CharField(max_length=40, choices=PROJECT_TYPE_CHOICES, default=Web_design)
     status = models.CharField(max_length=40, choices=PROJECT_STATUS_CHOICES, default=Uncomplete)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True)
-    date_added = models.DateTimeField(default=timezone.now())
+    date_added = models.DateTimeField(default=timezone)
     
     def __str__(self):
         return self.name
@@ -112,7 +112,7 @@ class EmployeeRequest(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='Sentfrom+')
     to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name=' Sentto+')
     description = models.TextField(max_length=300)
-    requested_at = models.DateTimeField(default=timezone.now())
+    requested_at = models.DateTimeField(default=timezone)
     is_resolved = models.BooleanField(default=False)
 
     def __str__(self):

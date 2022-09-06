@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['yobrandcms.herokuapp.com','www.yobrandcms.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['yobrandcms.herokuapp.com','www.yobrandcms.herokuapp.com','127.0.0.1', 'yobrand.up.railway.app', 'www.yobrand.up.railway.app']
 
 # email backend
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
